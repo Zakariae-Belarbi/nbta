@@ -1,0 +1,1809 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wastewater Purification & Electricity</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+/* Base Styles */
+:root {
+  --primary-color: #1b4d3e;
+  --secondary-color: #3498db;
+  --accent-color: #27ae60;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --gray-color: #6c757d;
+  --light-gray: #e9ecef;
+  
+  --transition-speed: 0.3s;
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 40px;
+  --spacing-xl: 64px;
+  
+  --border-radius: 8px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+  color: var(--dark-color);
+  background-color: var(--light-color);
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  transition: color var(--transition-speed);
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+.highlight {
+  color: var(--accent-color);
+}
+
+/* Header Styles */
+.header {
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(27, 77, 62, 0.9), rgba(52, 152, 219, 0.8)),
+              url('https://images.pexels.com/photos/3571551/pexels-photo-3571551.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover no-repeat;
+  color: var(--light-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.header-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-lg) 0;
+}
+
+.project-title {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-xs);
+  color: var(--light-color);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.project-subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--light-color);
+  margin-bottom: var(--spacing-lg);
+  max-width: 800px;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+  gap: var(--spacing-md);
+}
+
+.icon-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.icon-box i {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.scroll-down {
+  position: absolute;
+  bottom: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--light-color);
+  animation: bounce 2s infinite;
+}
+
+.scroll-down i {
+  font-size: 1.5rem;
+  margin-top: var(--spacing-xs);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Navbar Styles */
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: var(--light-color);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-sm) 0;
+  z-index: 1000;
+  transition: all var(--transition-speed);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.nav-link {
+  color: var(--dark-color);
+  font-weight: 500;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-speed);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+
+/* Section Styles */
+.section {
+  padding: var(--spacing-xl) 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.section:nth-child(even) {
+  background-color: var(--light-gray);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  color: var(--gray-color);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.section-content {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.section-content.reverse {
+  flex-direction: row-reverse;
+}
+
+.text-content,
+.visual-content {
+  flex: 1;
+}
+
+.step-indicator {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Key Benefits */
+.key-benefits {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.benefit {
+  flex: 1;
+  text-align: center;
+  padding: var(--spacing-md);
+  background-color: rgba(27, 77, 62, 0.05);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+}
+
+.benefit:hover {
+  transform: translateY(-5px);
+}
+
+.benefit i {
+  font-size: 2rem;
+  color: var(--accent-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.benefit h3 {
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Analysis Parameters */
+.analysis-parameters {
+  margin-top: var(--spacing-md);
+}
+
+.parameter {
+  margin-bottom: var(--spacing-md);
+}
+
+.parameter i {
+  color: var(--secondary-color);
+  margin-right: var(--spacing-xs);
+}
+
+.parameter-range {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.range-bar {
+  flex: 1;
+  height: 6px;
+  background-color: var(--light-gray);
+  border-radius: 3px;
+  position: relative;
+}
+
+.range-indicator {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Analysis Illustration */
+.analysis-illustration {
+  background-color: rgba(52, 152, 219, 0.1);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.water-container {
+  width: 80%;
+  height: 200px;
+  background-color: rgba(52, 152, 219, 0.2);
+  border-radius: var(--border-radius);
+  position: relative;
+  overflow: hidden;
+}
+
+.water-waves {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  top: 50%;
+  left: -50%;
+  background: rgba(52, 152, 219, 0.4);
+  border-radius: 40%;
+  animation: waves 5s linear infinite;
+}
+
+@keyframes waves {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.analysis-icons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.analysis-icons i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: var(--spacing-sm);
+  border-radius: 50%;
+}
+
+/* Filtration Stages */
+.filtration-stages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: rgba(27, 77, 62, 0.05);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+}
+
+.stage:hover {
+  transform: translateX(10px);
+}
+
+.stage-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  background-color: rgba(27, 77, 62, 0.1);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+}
+
+/* Filtration Illustration */
+.filtration-illustration {
+  position: relative;
+  min-height: 400px;
+  background-color: rgba(27, 77, 62, 0.05);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  overflow: hidden;
+}
+
+.filter-layer {
+  height: 80px;
+  margin-bottom: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+}
+
+.sand-filter {
+  background-color: #e6c35a;
+  background-image: radial-gradient(#d4af37 2px, transparent 2px);
+  background-size: 8px 8px;
+}
+
+.textile-filter {
+  background-color: #f1f2f6;
+  background-image: linear-gradient(45deg, #e6e7eb 25%, transparent 25%, transparent 50%, #e6e7eb 50%, #e6e7eb 75%, transparent 75%, transparent);
+  background-size: 10px 10px;
+}
+
+.carbon-filter {
+  background-color: #2f3542;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 2px);
+  background-size: 8px 8px;
+}
+
+.label {
+  color: var(--dark-color);
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+}
+
+.carbon-filter .label {
+  color: var(--light-color);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.water-flow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.drop {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(52, 152, 219, 0.6);
+  border-radius: 50%;
+  top: -10px;
+  animation: drop 3s linear infinite;
+}
+
+.drop1 { left: 30%; animation-delay: 0s; }
+.drop2 { left: 50%; animation-delay: 1s; }
+.drop3 { left: 70%; animation-delay: 2s; }
+
+@keyframes drop {
+  0% {
+    top: -10px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Plant System */
+.plant-system {
+  position: relative;
+  min-height: 400px;
+  background-color: rgba(27, 77, 62, 0.05);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.plant {
+  position: relative;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plant-leaves {
+  width: 120px;
+  height: 80px;
+  background-color: var(--accent-color);
+  clip-path: ellipse(60px 40px at 50% 50%);
+}
+
+.plant-stem {
+  width: 10px;
+  height: 80px;
+  background-color: #2ecc71;
+}
+
+.plant-roots {
+  width: 100px;
+  height: 40px;
+  background-color: #95a5a6;
+  clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 70% 40%, 50% 100%, 30% 40%, 10% 100%);
+}
+
+.soil-layer {
+  height: 80px;
+  background-color: #795548;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--spacing-lg);
+}
+
+.water-layer {
+  height: 80px;
+  background-color: rgba(52, 152, 219, 0.3);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.anode, .cathode {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--light-color);
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.microbes {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.microbes i {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.wire-connection {
+  position: absolute;
+  width: 80%;
+  height: 100px;
+  top: 45%;
+  left: 10%;
+  border: 2px solid #95a5a6;
+  border-top: none;
+  border-radius: 0 0 50px 50px;
+  z-index: 5;
+}
+
+.electron-flow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.electron {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #f39c12;
+  border-radius: 50%;
+  animation: electron 5s linear infinite;
+}
+
+.e1 { left: 20%; animation-delay: 0s; }
+.e2 { left: 50%; animation-delay: 1.5s; }
+.e3 { left: 80%; animation-delay: 3s; }
+
+@keyframes electron {
+  0% {
+    top: 40%;
+    left: 20%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  40% {
+    top: 70%;
+    left: 20%;
+  }
+  70% {
+    top: 70%;
+    left: 80%;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 40%;
+    left: 80%;
+    opacity: 0;
+  }
+}
+
+/* Process Details */
+.process-details {
+  margin-top: var(--spacing-md);
+}
+
+.detail-item {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: rgba(27, 77, 62, 0.05);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+}
+
+.detail-item:hover {
+  transform: translateX(10px);
+}
+
+.detail-item h4 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+
+.detail-item h4 i {
+  color: var(--secondary-color);
+}
+
+/* Output Metrics */
+.output-metrics {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.metric {
+  flex: 1;
+  text-align: center;
+  padding: var(--spacing-md);
+  background-color: rgba(27, 77, 62, 0.05);
+  border-radius: var(--border-radius);
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+.metric-label {
+  color: var(--gray-color);
+}
+
+/* Applications */
+.applications {
+  margin-top: var(--spacing-md);
+}
+
+.application-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.application {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  background-color: rgba(27, 77, 62, 0.05);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+}
+
+.application:hover {
+  transform: translateY(-3px);
+}
+
+.application i {
+  color: var(--secondary-color);
+}
+
+/* Output Illustration */
+.output-illustration {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  text-align: center;
+}
+
+.water-output, .electricity-output {
+  flex: 1;
+  padding: var(--spacing-md);
+  background-color: rgba(27, 77, 62, 0.05);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.water-drops {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  margin-bottom: var(--spacing-sm);
+}
+
+.water-drops::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(52, 152, 219, 0.7);
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(45deg);
+  top: 30px;
+  left: 30px;
+  animation: waterDrop 3s ease-in-out infinite;
+}
+
+@keyframes waterDrop {
+  0%, 100% {
+    transform: rotate(45deg) scale(1);
+  }
+  50% {
+    transform: rotate(45deg) scale(1.2);
+  }
+}
+
+.lightning {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  margin-bottom: var(--spacing-sm);
+}
+
+.lightning::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 60px;
+  background-color: #f39c12;
+  clip-path: polygon(50% 0%, 0% 100%, 50% 70%, 100% 100%);
+  top: 20px;
+  left: 40px;
+  animation: lightning 2s ease-in-out infinite;
+}
+
+@keyframes lightning {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Graph Container */
+.graph-container {
+  background-color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.graph-container h3 {
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  padding: var(--spacing-lg) 0 var(--spacing-md);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+}
+
+.footer-info h3 {
+  color: var(--light-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.footer-links a {
+  color: var(--light-color);
+  font-size: 1.5rem;
+  transition: transform var(--transition-speed);
+}
+
+.footer-links a:hover {
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .section-content {
+    flex-direction: column;
+  }
+  
+  .section-content.reverse {
+    flex-direction: column;
+  }
+  
+  .text-content, .visual-content {
+    width: 100%;
+  }
+  
+  .key-benefits, .output-metrics {
+    flex-direction: column;
+  }
+
+  .application-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-title {
+    font-size: 3rem;
+  }
+  
+  .project-subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar .container {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .project-title {
+    font-size: 2.5rem;
+  }
+  
+  .header-icons {
+    flex-direction: column;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .benefit, .output-illustration {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .project-title {
+    font-size: 2rem;
+  }
+  
+  .project-subtitle {
+    font-size: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+  
+  .benefit i, .application i {
+    font-size: 1.5rem;
+  }
+  
+  .nav-link {
+    padding: var(--spacing-xs);
+    font-size: 0.875rem;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <header class="header" id="header">
+      <div class="container">
+        <div class="header-content">
+          <h1 class="project-title">EcoPower<span class="highlight">Plus</span></h1>
+          <h2 class="project-subtitle">Wastewater Purification & Electricity Production Using Plants</h2>
+          <div class="header-icons">
+            <div class="icon-box">
+              <i class="fas fa-water"></i>
+              <span>Clean Water</span>
+            </div>
+            <div class="icon-box">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="icon-box">
+              <i class="fas fa-bolt"></i>
+              <span>Electricity</span>
+            </div>
+          </div>
+          <a href="#introduction" class="scroll-down">
+            <span>Learn More</span>
+            <i class="fas fa-chevron-down"></i>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <nav class="navbar" id="navbar">
+      <div class="container">
+        <div class="logo">EcoPower<span class="highlight">Plus</span></div>
+        <div class="nav-links">
+          <a href="#introduction" class="nav-link">Introduction</a>
+          <a href="#step1" class="nav-link">Analysis</a>
+          <a href="#step2" class="nav-link">Filtration</a>
+          <a href="#step3" class="nav-link">Plant System</a>
+          <a href="#step4" class="nav-link">Output</a>
+          <a href="dashboard_nbta.html" class="nav-link">Dashboard</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section id="introduction" class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Innovative Ecological Solution</h2>
+            <p class="section-subtitle">Harnessing the power of nature for sustainable water treatment</p>
+          </div>
+          <div class="section-content">
+            <div class="text-content">
+              <p>Our innovative system combines phytoremediation with microbial fuel cell technology to simultaneously purify wastewater and generate electricity. Using the remarkable <em>Canna indica</em> plant, our process creates a sustainable cycle that delivers two valuable outputs: clean water and renewable energy.</p>
+              <div class="key-benefits">
+                <div class="benefit">
+                  <i class="fas fa-leaf"></i>
+                  <h3>Sustainable</h3>
+                  <p>100% natural biological process</p>
+                </div>
+                <div class="benefit">
+                  <i class="fas fa-recycle"></i>
+                  <h3>Efficient</h3>
+                  <p>Dual output from a single system</p>
+                </div>
+                <div class="benefit">
+                  <i class="fas fa-seedling"></i>
+                  <h3>Scalable</h3>
+                  <p>Works for homes or communities</p>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="graph-container">
+                <h3>System Efficiency</h3>
+                <canvas id="efficiencyChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step1" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 1</div>
+            <h2 class="section-title">Wastewater Analysis</h2>
+            <p class="section-subtitle">Understanding what we're working with</p>
+          </div>
+          <div class="section-content reverse">
+            <div class="text-content">
+              <p>Before treatment begins, we analyze the wastewater to determine its composition and contaminant levels. This crucial step allows us to optimize the purification process for maximum efficiency.</p>
+              <div class="analysis-parameters">
+                <div class="parameter">
+                  <i class="fas fa-vial"></i>
+                  <h4>pH Level</h4>
+                  <div class="parameter-range">
+                    <span>Acidic</span>
+                    <div class="range-bar">
+                      <div class="range-indicator" style="left: 60%"></div>
+                    </div>
+                    <span>Alkaline</span>
+                  </div>
+                </div>
+                <div class="parameter">
+                  <i class="fas fa-temperature-high"></i>
+                  <h4>Temperature</h4>
+                  <div class="parameter-range">
+                    <span>Cold</span>
+                    <div class="range-bar">
+                      <div class="range-indicator" style="left: 40%"></div>
+                    </div>
+                    <span>Hot</span>
+                  </div>
+                </div>
+                <div class="parameter">
+                  <i class="fas fa-tint-slash"></i>
+                  <h4>Contaminants</h4>
+                  <div class="parameter-range">
+                    <span>Low</span>
+                    <div class="range-bar">
+                      <div class="range-indicator" style="left: 75%"></div>
+                    </div>
+                    <span>High</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="analysis-illustration">
+                <div class="water-container">
+                  <div class="water-waves"></div>
+                  <div class="analysis-icons">
+                    <i class="fas fa-microscope"></i>
+                    <i class="fas fa-flask"></i>
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step2" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 2</div>
+            <h2 class="section-title">Preliminary Filtration</h2>
+            <p class="section-subtitle">Removing larger particles and debris</p>
+          </div>
+          <div class="section-content">
+            <div class="text-content">
+              <p>Before the biological treatment begins, wastewater passes through a series of preliminary filters to remove larger particles, debris, and some chemical contaminants. This prepares the water for the plant-based purification system.</p>
+              <div class="filtration-stages">
+                <div class="stage">
+                  <div class="stage-number">01</div>
+                  <h4>Coarse Filtration</h4>
+                  <p>Sand and gravel filters remove larger debris and particles</p>
+                </div>
+                <div class="stage">
+                  <div class="stage-number">02</div>
+                  <h4>Textile Filtration</h4>
+                  <p>Fine mesh screens capture smaller suspended solids</p>
+                </div>
+                <div class="stage">
+                  <div class="stage-number">03</div>
+                  <h4>Carbon Absorption</h4>
+                  <p>Activated carbon removes chemicals and odors</p>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="filtration-illustration">
+                <div class="filter-layer sand-filter">
+                  <div class="label">Sand Filter</div>
+                </div>
+                <div class="filter-layer textile-filter">
+                  <div class="label">Textile Filter</div>
+                </div>
+                <div class="filter-layer carbon-filter">
+                  <div class="label">Carbon Filter</div>
+                </div>
+                <div class="water-flow">
+                  <div class="drop drop1"></div>
+                  <div class="drop drop2"></div>
+                  <div class="drop drop3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step3" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 3</div>
+            <h2 class="section-title">Plant-Based Purification + Microbial Electricity</h2>
+            <p class="section-subtitle">The heart of our dual-purpose system</p>
+          </div>
+          <div class="section-content reverse">
+            <div class="text-content">
+              <p>Our system uses <em>Canna indica</em> plants in a specially designed setup that combines phytoremediation with a Plant Microbial Fuel Cell (PMFC). The plants' roots absorb contaminants while microbes in the soil break down organic matter, generating electricity in the process.</p>
+              <div class="process-details">
+                <div class="detail-item">
+                  <h4><i class="fas fa-file-alt"></i> Phytoremediation</h4>
+                  <p>The <em>Canna indica</em> plant naturally filters pollutants from water through its extensive root system, absorbing nitrogen, phosphorus, and heavy metals.</p>
+                </div>
+                <div class="detail-item">
+                  <h4><i class="fas fa-plug"></i> Microbial Fuel Cell</h4>
+                  <p>Bacteria in the soil around the plant roots break down organic matter, releasing electrons that are captured by an anode buried in the rhizosphere.</p>
+                </div>
+                <div class="detail-item">
+                  <h4><i class="fas fa-exchange-alt"></i> Electron Transfer</h4>
+                  <p>Electrons flow from the anode to the cathode through an external circuit, generating usable electricity while completing the water purification process.</p>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="plant-system">
+                <div class="plant">
+                  <div class="plant-leaves"></div>
+                  <div class="plant-stem"></div>
+                  <div class="plant-roots"></div>
+                </div>
+                <div class="soil-layer">
+                  <div class="anode">Anode</div>
+                  <div class="microbes">
+                    <i class="fas fa-bacterium"></i>
+                    <i class="fas fa-bacterium"></i>
+                    <i class="fas fa-bacterium"></i>
+                  </div>
+                </div>
+                <div class="water-layer">
+                  <div class="cathode">Cathode</div>
+                </div>
+                <div class="wire-connection"></div>
+                <div class="electron-flow">
+                  <div class="electron e1"></div>
+                  <div class="electron e2"></div>
+                  <div class="electron e3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step4" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 4</div>
+            <h2 class="section-title">Double Output</h2>
+            <p class="section-subtitle">Clean water and renewable electricity</p>
+          </div>
+          <div class="section-content">
+            <div class="text-content">
+              <p>Our system produces two valuable outputs: purified water suitable for irrigation or further treatment, and electrical energy that can power LEDs, sensors, or be boosted with a DC-DC converter (LTC3105) for more power-hungry applications.</p>
+              <div class="output-metrics">
+                <div class="metric">
+                  <div class="metric-value"><span id="purification-percent">95</span>%</div>
+                  <div class="metric-label">Purification Efficiency</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-value"><span id="milliwatts">50</span>mW</div>
+                  <div class="metric-label">Power Generation</div>
+                </div>
+              </div>
+              <div class="applications">
+                <h4>Applications</h4>
+                <div class="application-list">
+                  <div class="application">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>LED Lighting</span>
+                  </div>
+                  <div class="application">
+                    <i class="fas fa-wifi"></i>
+                    <span>IoT Sensors</span>
+                  </div>
+                  <div class="application">
+                    <i class="fas fa-tint"></i>
+                    <span>Irrigation</span>
+                  </div>
+                  <div class="application">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Device Charging</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="graph-container">
+                <h3>Power Output Over Time</h3>
+                <canvas id="powerChart"></canvas>
+              </div>
+              <div class="output-illustration">
+                <div class="water-output">
+                  <div class="water-drops"></div>
+                  <span>Clean Water</span>
+                </div>
+                <div class="electricity-output">
+                  <div class="lightning"></div>
+                  <span>Electricity</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <h3>EcoPower<span class="highlight">Plus</span></h3>
+            <p>Sustainable solutions for a cleaner future</p>
+          </div>
+          <div class="footer-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 EcoPowerPlus. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Navigation highlighting
+      const sections = document.querySelectorAll('.section');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      // Update navigation on scroll
+      function updateNavigation() {
+        let currentSection = '';
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (window.scrollY >= (sectionTop - sectionHeight / 3)) {
+            currentSection = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === currentSection) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      // Navbar behavior on scroll
+      const navbar = document.getElementById('navbar');
+      const header = document.getElementById('header');
+
+      function updateNavbar() {
+        if (window.scrollY > header.offsetHeight - 100) {
+          navbar.style.backgroundColor = 'var(--light-color)';
+          navbar.style.boxShadow = 'var(--shadow-md)';
+        } else {
+          navbar.style.backgroundColor = 'transparent';
+          navbar.style.boxShadow = 'none';
+        }
+      }
+
+      // Counter animation
+      function animateCounter(elementId, target, duration = 2000) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        let startValue = 0;
+        const increment = target / (duration / 16);
+        
+        const updateCounter = () => {
+          startValue += increment;
+          if (startValue > target) {
+            element.textContent = Math.floor(target);
+          } else {
+            element.textContent = Math.floor(startValue);
+            requestAnimationFrame(updateCounter);
+          }
+        };
+        
+        updateCounter();
+      }
+
+      // Initialize counters when in viewport
+      function initCounters() {
+        const step4Section = document.getElementById('step4');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateCounter('purification-percent', 95);
+              animateCounter('milliwatts', 50);
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.5 });
+        
+        if (step4Section) {
+          observer.observe(step4Section);
+        }
+      }
+
+      // Event Listeners
+      window.addEventListener('scroll', () => {
+        updateNavigation();
+        updateNavbar();
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+        updateNavigation();
+        updateNavbar();
+        initCounters();
+        
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+      });
+
+      // Initialize GSAP ScrollTrigger
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof gsap !== 'undefined' && gsap.registerPlugin) {
+          gsap.registerPlugin(ScrollTrigger);
+          initAnimations();
+        }
+      });
+
+      function initAnimations() {
+        // Header Animation
+        gsap.from('.project-title', {
+          opacity: 0,
+          y: -50,
+          duration: 1,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('.project-subtitle', {
+          opacity: 0,
+          y: -30,
+          duration: 1,
+          delay: 0.3,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('.header-icons', {
+          opacity: 0,
+          y: 30,
+          duration: 1,
+          delay: 0.6,
+          ease: 'power3.out'
+        });
+        
+        // Introduction Section
+        gsap.from('#introduction .section-title', {
+          scrollTrigger: {
+            trigger: '#introduction',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: -30,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#introduction .section-subtitle', {
+          scrollTrigger: {
+            trigger: '#introduction',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: -20,
+          duration: 0.8,
+          delay: 0.2,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#introduction .text-content p', {
+          scrollTrigger: {
+            trigger: '#introduction .text-content',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          delay: 0.4,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#introduction .benefit', {
+          scrollTrigger: {
+            trigger: '#introduction .key-benefits',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.5,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        // Step 1: Analysis Section
+        animateStepSection('#step1');
+        
+        // Animate analysis parameters individually
+        gsap.from('#step1 .parameter', {
+          scrollTrigger: {
+            trigger: '#step1 .analysis-parameters',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          x: -30,
+          duration: 0.5,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        // Analysis illustration animation
+        gsap.from('#step1 .analysis-illustration', {
+          scrollTrigger: {
+            trigger: '#step1 .analysis-illustration',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          scale: 0.9,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+        
+        // Step 2: Filtration Section
+        animateStepSection('#step2');
+        
+        // Animate filtration stages individually
+        gsap.from('#step2 .stage', {
+          scrollTrigger: {
+            trigger: '#step2 .filtration-stages',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          x: -40,
+          duration: 0.5,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        // Filtration layers animation
+        gsap.from('#step2 .filter-layer', {
+          scrollTrigger: {
+            trigger: '#step2 .filtration-illustration',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          x: 40,
+          duration: 0.5,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        // Step 3: Plant System Section
+        animateStepSection('#step3');
+        
+        // Animate process details individually
+        gsap.from('#step3 .detail-item', {
+          scrollTrigger: {
+            trigger: '#step3 .process-details',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          x: -40,
+          duration: 0.5,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        // Plant system animation
+        gsap.from('#step3 .plant-system', {
+          scrollTrigger: {
+            trigger: '#step3 .plant-system',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          scale: 0.9,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+        
+        // Step 4: Output Section
+        animateStepSection('#step4');
+        
+        // Animate output metrics individually
+        gsap.from('#step4 .metric', {
+          scrollTrigger: {
+            trigger: '#step4 .output-metrics',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.5,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        // Animate applications individually
+        gsap.from('#step4 .application', {
+          scrollTrigger: {
+            trigger: '#step4 .application-list',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.4,
+          stagger: 0.1,
+          ease: 'power3.out'
+        });
+        
+        // Output illustration animation
+        gsap.from('#step4 .output-illustration > div', {
+          scrollTrigger: {
+            trigger: '#step4 .output-illustration',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.5,
+          stagger: 0.3,
+          ease: 'power3.out'
+        });
+        
+        // Graph animation
+        gsap.from('#step4 .graph-container', {
+          scrollTrigger: {
+            trigger: '#step4 .graph-container',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+      }
+
+      // Helper function to animate a step section
+      function animateStepSection(sectionId) {
+        gsap.from(`${sectionId} .step-indicator`, {
+          scrollTrigger: {
+            trigger: sectionId,
+            start: 'top 80%'
+          },
+          opacity: 0,
+          scale: 0.5,
+          duration: 0.5,
+          ease: 'back.out(1.7)'
+        });
+        
+        gsap.from(`${sectionId} .section-title`, {
+          scrollTrigger: {
+            trigger: sectionId,
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: -30,
+          duration: 0.8,
+          delay: 0.2,
+          ease: 'power3.out'
+        });
+        
+        gsap.from(`${sectionId} .section-subtitle`, {
+          scrollTrigger: {
+            trigger: sectionId,
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: -20,
+          duration: 0.8,
+          delay: 0.3,
+          ease: 'power3.out'
+        });
+        
+        gsap.from(`${sectionId} .text-content p`, {
+          scrollTrigger: {
+            trigger: `${sectionId} .text-content`,
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          delay: 0.4,
+          ease: 'power3.out'
+        });
+      }
+
+      // Create charts when DOM is loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        createEfficiencyChart();
+        createPowerChart();
+      });
+
+      // Efficiency Chart
+      function createEfficiencyChart() {
+        const ctx = document.getElementById('efficiencyChart');
+        if (!ctx) return;
+        
+        const chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Heavy Metals', 'Nitrogen', 'Phosphorus', 'Organic Compounds', 'Bacteria'],
+            datasets: [{
+              label: 'Removal Efficiency (%)',
+              data: [92, 98, 95, 89, 99],
+              backgroundColor: [
+                'rgba(39, 174, 96, 0.7)',
+                'rgba(41, 128, 185, 0.7)',
+                'rgba(142, 68, 173, 0.7)',
+                'rgba(230, 126, 34, 0.7)',
+                'rgba(44, 62, 80, 0.7)'
+              ],
+              borderColor: [
+                'rgba(39, 174, 96, 1)',
+                'rgba(41, 128, 185, 1)',
+                'rgba(142, 68, 173, 1)',
+                'rgba(230, 126, 34, 1)',
+                'rgba(44, 62, 80, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return `Removal: ${context.raw}%`;
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                  callback: function(value) {
+                    return value + '%';
+                  }
+                },
+                title: {
+                  display: true,
+                  text: 'Removal Efficiency'
+                }
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Contaminant Type'
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Power Output Chart
+      function createPowerChart() {
+        const ctx = document.getElementById('powerChart');
+        if (!ctx) return;
+        
+        // Generate time data (hours)
+        const hours = Array.from({length: 24}, (_, i) => i);
+        
+        // Generate synthetic data with day/night cycle
+        const powerData = hours.map(hour => {
+          // Simulate day/night cycle effect on power generation
+          // More power during daylight hours (6-18)
+          const isDaylight = hour >= 6 && hour <= 18;
+          const baseValue = isDaylight ? 45 : 35;
+          const variation = isDaylight ? 10 : 5;
+          
+          return baseValue + Math.random() * variation;
+        });
+        
+        const chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: hours.map(hour => `${hour}:00`),
+            datasets: [{
+              label: 'Power Output (mW)',
+              data: powerData,
+              backgroundColor: 'rgba(52, 152, 219, 0.2)',
+              borderColor: 'rgba(52, 152, 219, 1)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+              pointRadius: 3
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return `Output: ${context.raw.toFixed(1)} mW`;
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Power (mW)'
+                }
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Time (hours)'
+                }
+              }
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
